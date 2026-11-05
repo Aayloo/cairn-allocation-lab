@@ -12,6 +12,12 @@ analysis and return attribution.
 It is a **paper research portfolio**. It is not a live account, does not contain
 real PnL and is not investment advice.
 
+**Five-minute investment case:** [English presentation script](docs/5-minute-investment-case.md)
+
+The presentation explains the investment question, SAA/TAA rules, the negative
+result versus a 60/40 benchmark, current risk concentration, the next decision
+trigger, and the key limitations.
+
 ## Research design
 
 - 40% equities: SPY, VEA, EEM
