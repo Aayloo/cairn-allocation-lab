@@ -7,7 +7,7 @@ portfolio decision. It connects strategic allocation, tactical signals,
 constraints, currency translation, transaction costs, risk and attribution in
 one reproducible workflow.
 
-**Live product:** <https://aayloo.github.io/l1-multi-asset-shadow/>
+**Live product:** <https://aayloo.github.io/cairn-allocation-lab/>
 
 > Paper research portfolio only. Cairn contains no real money, broker orders,
 > personal account or investment advice.

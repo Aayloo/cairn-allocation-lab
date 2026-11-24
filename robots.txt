@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aayloo.github.io/l1-multi-asset-shadow/sitemap.xml
+Sitemap: https://aayloo.github.io/cairn-allocation-lab/sitemap.xml

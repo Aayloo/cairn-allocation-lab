@@ -3,7 +3,7 @@ requires = ["setuptools>=69"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "l1-multi-asset-shadow"
+name = "cairn-allocation-lab"
 version = "1.0.0"
 description = "Cairn: an insurance-aware multi-asset allocation and attribution research cockpit."
 readme = "README.md"

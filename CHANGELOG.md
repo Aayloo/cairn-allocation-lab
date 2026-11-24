@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-24 — Repository rename
+
+- Renamed the GitHub repository from `l1-multi-asset-shadow` to
+  `cairn-allocation-lab`.
+- Updated canonical, social-preview, sitemap, documentation and repository links.
+- Preserved the full Git history and the original research/data pipeline.
+
 ## 2026-11-24 — Day 1
 
 - Introduced the Cairn product identity and 10-working-day roadmap.
