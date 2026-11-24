@@ -6,6 +6,8 @@
   `cairn-allocation-lab`.
 - Updated canonical, social-preview, sitemap, documentation and repository links.
 - Preserved the full Git history and the original research/data pipeline.
+- Added a clickable product screenshot and prominent live-demo links to the
+  README.
 
 ## 2026-11-24 — Day 1
 

@@ -68,3 +68,12 @@ def test_social_card_has_expected_dimensions():
     with Image.open(ROOT / "assets" / "img" / "share.png") as image:
         assert image.size == (1200, 630)
         assert image.mode == "RGB"
+
+
+def test_readme_has_clickable_product_preview():
+    html = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert "assets/img/cairn-preview.png" in html
+    assert "https://aayloo.github.io/cairn-allocation-lab/" in html
+    with Image.open(ROOT / "assets" / "img" / "cairn-preview.png") as image:
+        assert image.width >= 1200
+        assert image.height >= 720

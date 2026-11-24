@@ -2,12 +2,26 @@
 
 **Insurance-aware Multi-Asset Allocation Lab**
 
+<p align="center">
+  <a href="https://aayloo.github.io/cairn-allocation-lab/">
+    <img src="assets/img/cairn-preview.png" alt="Cairn multi-asset allocation cockpit preview" width="1100">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://aayloo.github.io/cairn-allocation-lab/"><strong>Open the live interactive product →</strong></a>
+  &nbsp;·&nbsp;
+  <a href="docs/5-minute-investment-case.md">Five-minute investment case</a>
+  &nbsp;·&nbsp;
+  <a href="docs/ROADMAP_10D.md">10-day roadmap</a>
+</p>
+
 Cairn is a research cockpit for turning an investment view into an inspectable
 portfolio decision. It connects strategic allocation, tactical signals,
 constraints, currency translation, transaction costs, risk and attribution in
 one reproducible workflow.
 
-**Live product:** <https://aayloo.github.io/cairn-allocation-lab/>
+**Click the preview above or use the link to open the interactive product.**
 
 > Paper research portfolio only. Cairn contains no real money, broker orders,
 > personal account or investment advice.
