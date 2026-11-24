@@ -170,7 +170,7 @@ try {
     if (metrics.missingResults.length) {
       throw new Error(`${viewport.name}: unresolved results: ${metrics.missingResults.join(", ")}`);
     }
-    if (metrics.h1Count !== 1 || metrics.sectionCount !== 10) throw new Error(`${viewport.name}: bad heading or section count`);
+    if (metrics.h1Count !== 1 || metrics.sectionCount !== 6) throw new Error(`${viewport.name}: bad heading or section count`);
 
     if (viewport.name === "mobile") {
       const menu = await cdp.send("Runtime.evaluate", {
@@ -187,6 +187,51 @@ try {
         })()`,
       });
       if (!menu.result.value.open || !menu.result.value.closed) throw new Error("mobile navigation failed");
+    }
+
+    if (viewport.name === "desktop") {
+      const interaction = await cdp.send("Runtime.evaluate", {
+        returnByValue: true,
+        awaitPromise: true,
+        expression: `(async () => {
+          const workspaceChecks = [];
+          for (const id of ["command", "allocation", "risk", "attribution", "research", "evidence"]) {
+            document.querySelector('.sidebar [data-view-target="' + id + '"]').click();
+            await new Promise((resolve) => setTimeout(resolve, 60));
+            workspaceChecks.push({
+              id,
+              visible: !document.querySelector("#" + id).hidden,
+              overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+              heading: Boolean(document.querySelector("#" + id + " h1, #" + id + " h2")),
+            });
+          }
+          document.querySelector('.sidebar [data-view-target="command"]').click();
+          await new Promise((resolve) => setTimeout(resolve, 60));
+          const trigger = document.querySelector("#command-trigger");
+          trigger.click();
+          await new Promise((resolve) => setTimeout(resolve, 80));
+          const opened = document.querySelector("#command-dialog").open;
+          document.querySelector("#command-close").click();
+          await new Promise((resolve) => setTimeout(resolve, 50));
+          return {
+            workspaceChecks,
+            commandOpened: opened,
+            commandClosed: !document.querySelector("#command-dialog").open,
+            activeLabel: document.querySelector("#current-workspace").textContent.trim(),
+            chartReady: document.querySelector("#performance-chart").width > 200,
+          };
+        })()`,
+      });
+      const value = interaction.result.value;
+      if (
+        !value.commandOpened ||
+        !value.commandClosed ||
+        value.activeLabel !== "Command" ||
+        !value.chartReady ||
+        value.workspaceChecks.some((check) => !check.visible || check.overflow || !check.heading)
+      ) {
+        throw new Error(`desktop interaction failed: ${JSON.stringify(value)}`);
+      }
     }
 
     const screenshot = await cdp.send("Page.captureScreenshot", {

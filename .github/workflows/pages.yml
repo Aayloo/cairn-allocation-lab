@@ -1,4 +1,4 @@
-name: Deploy L1 portfolio case
+name: Deploy Cairn
 
 on:
   push:

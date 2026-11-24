@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Cairn mark</title>
+  <desc id="desc">Three balanced stones forming a navigational waypoint.</desc>
+  <path d="M31.8 7.5 39 21.4 24.6 21.4Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M17.8 24.3h29.1l5.4 13.4H12.2z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M21 41.7h24.2l5.8 13H15Z" fill="currentColor" opacity=".18"/>
+  <path d="M21 41.7h24.2l5.8 13H15Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M32 7.5v-3" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+</svg>

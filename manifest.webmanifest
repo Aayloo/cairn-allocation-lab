@@ -1,0 +1,17 @@
+{
+  "name": "Cairn — Multi-Asset Allocation Lab",
+  "short_name": "Cairn",
+  "description": "An insurance-aware multi-asset allocation and attribution research cockpit.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#070a0f",
+  "theme_color": "#070a0f",
+  "icons": [
+    {
+      "src": "assets/brand/cairn-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

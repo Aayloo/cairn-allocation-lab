@@ -5,6 +5,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse
 
+from PIL import Image
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -43,7 +45,7 @@ def test_static_site_assets_and_anchors():
         assert fragment in parser.ids
     for resource in parser.local_paths:
         assert (ROOT / resource).resolve().exists(), resource
-    assert len(parser.images) == 7
+    assert len(parser.images) == 0
 
 
 def test_latest_weights_are_long_only_and_fully_invested():
@@ -57,4 +59,12 @@ def test_latest_weights_are_long_only_and_fully_invested():
 def test_research_disclaimer_is_visible():
     html = (ROOT / "index.html").read_text(encoding="utf-8").lower()
     assert "not investment advice" in html
+    assert "no real money" in html
+    assert "cairn" in html
     assert "no real money" in (ROOT / "reports" / "2026-10.md").read_text(encoding="utf-8").lower()
+
+
+def test_social_card_has_expected_dimensions():
+    with Image.open(ROOT / "assets" / "img" / "share.png") as image:
+        assert image.size == (1200, 630)
+        assert image.mode == "RGB"
