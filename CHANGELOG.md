@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-24 — Public positioning
+
+- Removed calendar-duration framing from public product copy.
+- Reorganized the roadmap around capability milestones and acceptance evidence.
+
 ## 2026-11-24 — Repository rename
 
 - Renamed the GitHub repository from `l1-multi-asset-shadow` to

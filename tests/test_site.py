@@ -77,3 +77,16 @@ def test_readme_has_clickable_product_preview():
     with Image.open(ROOT / "assets" / "img" / "cairn-preview.png") as image:
         assert image.width >= 1200
         assert image.height >= 720
+
+
+def test_public_copy_does_not_use_build_duration_framing():
+    public_files = [
+        ROOT / "README.md",
+        ROOT / "index.html",
+        ROOT / "docs" / "PRODUCT_ROADMAP.md",
+    ]
+    text = "\n".join(path.read_text(encoding="utf-8") for path in public_files).lower()
+    assert "10-day" not in text
+    assert "10 working" not in text
+    assert "ten working days" not in text
+    assert "day 1 of 10" not in text

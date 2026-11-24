@@ -13,7 +13,7 @@
   &nbsp;·&nbsp;
   <a href="docs/5-minute-investment-case.md">Five-minute investment case</a>
   &nbsp;·&nbsp;
-  <a href="docs/ROADMAP_10D.md">10-day roadmap</a>
+  <a href="docs/PRODUCT_ROADMAP.md">Product roadmap</a>
 </p>
 
 Cairn is a research cockpit for turning an investment view into an inspectable
@@ -84,10 +84,11 @@ redistributed. Versioned outputs used by the website live under `assets/data/`.
 
 ## Product roadmap
 
-Cairn is being built over ten working days from 2026-11-24 to 2026-12-07.
-Each day produces one testable product slice and one public update.
+Development is organized around reproducible product capabilities: data
+provenance, allocation, risk, attribution, a research decision ledger, scenario
+analysis and portfolio-ready exports.
 
-See [the 10-day roadmap](docs/ROADMAP_10D.md) and
+See [the product roadmap](docs/PRODUCT_ROADMAP.md) and
 [the product brief](docs/PRODUCT_BRIEF.md).
 
 ## Reference principles
