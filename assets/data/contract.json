@@ -1,0 +1,74 @@
+{
+  "contract": "cairn-results-v1",
+  "schema": "configs/results.schema.json",
+  "build_id": "44a7afd59c4dd7c7",
+  "validation_rules": [
+    "HKD base currency",
+    "Long-only current weights",
+    "Current and policy weights sum to one",
+    "Required portfolio metrics are numeric",
+    "Every listed artifact has a SHA-256 digest"
+  ],
+  "artifacts": {
+    "assets/data/data_manifest.json": {
+      "sha256": "8ab19691e7c9452ea5d7fc8f5c1cf054a712eb2f856c2f4e732afeec336564ee",
+      "bytes": 992
+    },
+    "assets/data/performance_history.csv": {
+      "sha256": "1683edfacde3ecd975102742bc0fe911d62b733ff763896c72b1d8fa5ada4829",
+      "bytes": 72556
+    },
+    "assets/data/latest_weights.csv": {
+      "sha256": "68621fa7d888f4150b9fadd13fab310c9381580bdb2c33af36f51468622e824c",
+      "bytes": 206
+    },
+    "assets/data/risk_contributions.csv": {
+      "sha256": "a6d0f9d0ce846dc05b4c163f7a9826ae482ad8e08c924749667c7fa9c6a9f810",
+      "bytes": 220
+    },
+    "assets/data/results.json": {
+      "sha256": "ebc77332ed764746be78be34911e916aa5999db212202f69658b518d4f57d6d2",
+      "bytes": 3478
+    },
+    "assets/data/results.js": {
+      "sha256": "7c80373cfa7cb079e744160057e21419d4a8846521c319c28cc621baeb39951e",
+      "bytes": 3506
+    },
+    "configs/policy_v1.json": {
+      "sha256": "39625811152b35fefb42730363307dc2af6c47d8ed3903926cb546d20e8181f6",
+      "bytes": 892
+    },
+    "configs/results.schema.json": {
+      "sha256": "882bdad895488e7085954ba780977ce19eb738132e171be8ea536bb34d8acacb",
+      "bytes": 1131
+    },
+    "assets/img/performance.png": {
+      "sha256": "d1588b915ae95285305f8660a618c4275b00b523e20a29c8b8648e722b17334e",
+      "bytes": 294746
+    },
+    "assets/img/risk-return.png": {
+      "sha256": "5223271851c0860f57789457353adefb0438ff7d0b1c6d09aeb2af513342f1c0",
+      "bytes": 106867
+    },
+    "assets/img/drawdown.png": {
+      "sha256": "81ab637ca0e45563b7131615411ace22fc3c0e759785f3661778e10d067509dd",
+      "bytes": 274579
+    },
+    "assets/img/allocation.png": {
+      "sha256": "876f7e3c8a91f9524de987030db68c10858f602bf2e09703572eaa9f35c1a854",
+      "bytes": 77024
+    },
+    "assets/img/allocation-history.png": {
+      "sha256": "ecd18f7361efc4d91535d099fc2fef99576438948c3818d752850e9439b30c6b",
+      "bytes": 188086
+    },
+    "assets/img/risk-contribution.png": {
+      "sha256": "9215c3922be7510e781b735c30a10879686f51f692d7fa31b1c4839dc8db2aa4",
+      "bytes": 62471
+    },
+    "assets/img/return-attribution.png": {
+      "sha256": "23add576096d3fa7bf50c9148a3dcfa313a7611c002b568df174d113f52b5262",
+      "bytes": 68237
+    }
+  }
+}

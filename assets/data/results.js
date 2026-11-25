@@ -1,4 +1,5 @@
 window.PORTFOLIO_RESULTS = {
+  "contract_version": "cairn-results-v1",
   "as_of": "2026-10-31",
   "market_data_through": "2026-10-30",
   "start": "2008-06-30",

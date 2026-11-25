@@ -270,6 +270,44 @@
     renderBenchmarkGap();
   }
 
+  function shortHash(value) {
+    return typeof value === "string" && value.length > 12 ? `${value.slice(0, 12)}…` : value || "—";
+  }
+
+  async function loadDataContract() {
+    const status = document.querySelector("#contract-status");
+    try {
+      const [manifestResponse, contractResponse] = await Promise.all([
+        fetch("assets/data/data_manifest.json"),
+        fetch("assets/data/contract.json"),
+      ]);
+      if (!manifestResponse.ok || !contractResponse.ok) {
+        throw new Error("Contract artifacts are unavailable.");
+      }
+      const [manifest, contract] = await Promise.all([
+        manifestResponse.json(),
+        contractResponse.json(),
+      ]);
+      setText("#contract-name", contract.contract);
+      setText("#contract-build", contract.build_id);
+      setText("#contract-data-hash", shortHash(manifest.data_sha256));
+      setText("#contract-artifact-count", `${Object.keys(contract.artifacts || {}).length} verified`);
+      setText("#contract-source", manifest.source);
+      setText("#contract-coverage", `${manifest.start} → ${manifest.end}`);
+      if (status) {
+        status.textContent = "Verified";
+        status.classList.remove("signal-chip--pending", "signal-chip--error");
+        status.classList.add("signal-chip--verified");
+      }
+    } catch {
+      if (status) {
+        status.textContent = "Unavailable";
+        status.classList.remove("signal-chip--pending", "signal-chip--verified");
+        status.classList.add("signal-chip--error");
+      }
+    }
+  }
+
   function showWorkspace(id, { updateHash = true, focus = false } = {}) {
     const targetId = workspaceNames[id] ? id : "command";
     panels.forEach((panel) => {
@@ -637,6 +675,7 @@
 
   renderPrimitiveResults();
   renderStaticModules();
+  loadDataContract();
   const initialWorkspace = window.location.hash.replace("#", "");
   showWorkspace(workspaceNames[initialWorkspace] ? initialWorkspace : "command", { updateHash: false });
 

@@ -49,7 +49,7 @@ negative result visible rather than tuning the rules after seeing the answer.
 - **Risk** — capital versus variance contribution and stress agenda.
 - **Attribution** — return sources and calendar-year dispersion.
 - **Research** — hypothesis, decision record and falsification conditions.
-- **Evidence** — data lineage, validation surface and downloads.
+- **Evidence** — data lineage, result contract, artifact hashes and downloads.
 
 ## Research design
 

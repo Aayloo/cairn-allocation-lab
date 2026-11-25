@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aayloo.github.io/cairn-allocation-lab/configs/results.schema.json",
+  "title": "Cairn public results",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "market_data_through",
+    "version",
+    "base_currency",
+    "cost_bps",
+    "metrics",
+    "latest_weights",
+    "policy_weights",
+    "risk_contribution",
+    "annual_return_contribution",
+    "signals",
+    "yearly_returns"
+  ],
+  "properties": {
+    "contract_version": {
+      "const": "cairn-results-v1"
+    },
+    "base_currency": {
+      "const": "HKD"
+    },
+    "cost_bps": {
+      "type": "number",
+      "minimum": 0
+    },
+    "metrics": {
+      "type": "object",
+      "required": ["L1 SAA", "L1 TAA", "60/40", "Equal weight"]
+    },
+    "latest_weights": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      }
+    },
+    "policy_weights": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      }
+    }
+  }
+}

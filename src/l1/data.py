@@ -7,6 +7,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from l1.contract import dataframe_sha256
+
 
 TICKERS = ["SPY", "VEA", "EEM", "IEF", "LQD", "GLD", "DBC", "BIL"]
 FX_TICKER = "HKD=X"
@@ -48,12 +50,21 @@ def write_data_manifest(path: str | Path, prices: pd.DataFrame, config: dict) ->
     target = Path(path)
     manifest = {
         "source": "Yahoo Finance via yfinance",
+        "source_class": "public market data",
         "price_field": "Adjusted close",
+        "adjustment_policy": "auto_adjust=True; dividends and splits reflected in adjusted closes",
+        "time_semantics": (
+            "Month-end adjusted closes; preventive signal alignment is enforced in "
+            "the research code, while vendor adjustments may be revised."
+        ),
         "currency_translation": "USD asset prices multiplied by USD/HKD; unhedged HKD investor view",
         "start": str(prices.index.min().date()),
         "end": str(prices.index.max().date()),
         "rows": int(len(prices)),
+        "columns": int(len(prices.columns)),
         "tickers": config["tickers"],
+        "data_sha256": dataframe_sha256(prices),
+        "schema_version": "cairn-data-v1",
         "raw_redistributed": False,
     }
     target.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")

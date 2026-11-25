@@ -219,6 +219,7 @@ try {
             commandClosed: !document.querySelector("#command-dialog").open,
             activeLabel: document.querySelector("#current-workspace").textContent.trim(),
             chartReady: document.querySelector("#performance-chart").width > 200,
+            contractStatus: document.querySelector("#contract-status").textContent.trim(),
           };
         })()`,
       });
@@ -228,6 +229,7 @@ try {
         !value.commandClosed ||
         value.activeLabel !== "Command" ||
         !value.chartReady ||
+        value.contractStatus !== "Verified" ||
         value.workspaceChecks.some((check) => !check.visible || check.overflow || !check.heading)
       ) {
         throw new Error(`desktop interaction failed: ${JSON.stringify(value)}`);

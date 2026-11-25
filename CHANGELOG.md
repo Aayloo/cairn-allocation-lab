@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-11-25 — Data contract
+
+- Added a versioned public-results schema and runtime validation for currency,
+  numeric metrics, universe alignment and fully invested long-only weights.
+- Expanded the data manifest with revision semantics, coverage and a SHA-256
+  fingerprint of the canonical input data.
+- Added an artifact contract that hashes results, configuration, charts and
+  downloadable data outputs.
+- Added a live Data Contract panel to the Evidence workspace.
+- Marked the data-contract milestone complete and moved Allocation to Next.
+
 ## 2026-11-24 — Public positioning
 
 - Removed calendar-duration framing from public product copy.

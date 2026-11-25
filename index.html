@@ -684,6 +684,47 @@
             </article>
           </div>
 
+          <article class="panel contract-panel">
+            <div class="panel-head">
+              <div>
+                <span class="panel-kicker">Data contract</span>
+                <h2>Every build has a traceable fingerprint</h2>
+              </div>
+              <span class="signal-chip signal-chip--pending" id="contract-status">Checking</span>
+            </div>
+            <div class="contract-grid">
+              <div>
+                <span>Contract</span>
+                <strong id="contract-name">—</strong>
+              </div>
+              <div>
+                <span>Build ID</span>
+                <strong id="contract-build">—</strong>
+              </div>
+              <div>
+                <span>Data hash</span>
+                <strong id="contract-data-hash">—</strong>
+              </div>
+              <div>
+                <span>Artifacts</span>
+                <strong id="contract-artifact-count">—</strong>
+              </div>
+              <div>
+                <span>Source</span>
+                <strong id="contract-source">—</strong>
+              </div>
+              <div>
+                <span>Coverage</span>
+                <strong id="contract-coverage">—</strong>
+              </div>
+            </div>
+            <p class="panel-copy panel-copy--small">
+              The contract validates currency, long-only weights, full investment
+              and required metrics. Each listed artifact is bound to a SHA-256
+              digest so a displayed number can be traced to the exact build.
+            </p>
+          </article>
+
           <article class="panel download-panel">
             <div>
               <span class="panel-kicker">Evidence pack</span>

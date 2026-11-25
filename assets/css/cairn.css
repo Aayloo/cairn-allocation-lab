@@ -2090,6 +2090,63 @@ h1 {
   margin-bottom: 14px;
 }
 
+.contract-panel {
+  margin-bottom: 14px;
+  background:
+    radial-gradient(circle at 92% 0, rgba(102, 215, 170, 0.08), transparent 18rem),
+    var(--surface);
+}
+
+.contract-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 22px 0 14px;
+  overflow: hidden;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+
+.contract-grid div {
+  min-height: 78px;
+  padding: 14px;
+  background: var(--surface-2);
+}
+
+.contract-grid span,
+.contract-grid strong {
+  display: block;
+}
+
+.contract-grid span {
+  color: var(--faint);
+  font-size: 0.62rem;
+}
+
+.contract-grid strong {
+  margin-top: 13px;
+  overflow: hidden;
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.signal-chip--verified {
+  color: var(--positive);
+  background: var(--positive-soft);
+  border-color: rgba(102, 215, 170, 0.25);
+}
+
+.signal-chip--error {
+  color: var(--negative);
+  background: var(--negative-soft);
+  border-color: rgba(244, 135, 122, 0.25);
+}
+
 .download-panel h2 {
   margin: 8px 0 6px;
   font-size: 1.7rem;
@@ -2779,6 +2836,10 @@ h1 {
     grid-template-columns: 1fr;
   }
 
+  .contract-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .app-footer {
     align-items: flex-start;
     flex-direction: column;
@@ -2863,6 +2924,10 @@ h1 {
 
   .year-heatmap {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .contract-grid {
+    grid-template-columns: 1fr;
   }
 
   .decision-record {

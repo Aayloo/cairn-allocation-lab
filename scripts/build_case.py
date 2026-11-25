@@ -23,6 +23,7 @@ from l1.analytics import (
     save_risk_contribution,
 )
 from l1.backtest import build_targets, make_research_frame, simulate, summarize
+from l1.contract import CONTRACT_VERSION, validate_results, write_artifact_contract
 from l1.data import load_prices, write_data_manifest
 
 
@@ -136,6 +137,7 @@ def main() -> None:
     write_data_manifest(ROOT / "assets" / "data" / "data_manifest.json", raw, config)
 
     results = {
+        "contract_version": CONTRACT_VERSION,
         "as_of": str(taa_history.index.max().date()),
         "market_data_through": str(raw.index.max().date()),
         "start": str(taa_history.index.min().date()),
@@ -158,6 +160,7 @@ def main() -> None:
             "classification": "Paper research portfolio; no real money or PnL.",
         },
     }
+    validate_results(results)
     (data_dir / "results.json").write_text(
         json.dumps(results, indent=2) + "\n",
         encoding="utf-8",
@@ -165,6 +168,27 @@ def main() -> None:
     (data_dir / "results.js").write_text(
         "window.PORTFOLIO_RESULTS = " + json.dumps(results, indent=2) + ";\n",
         encoding="utf-8",
+    )
+    write_artifact_contract(
+        data_dir / "contract.json",
+        ROOT,
+        [
+            data_dir / "data_manifest.json",
+            data_dir / "performance_history.csv",
+            data_dir / "latest_weights.csv",
+            data_dir / "risk_contributions.csv",
+            data_dir / "results.json",
+            data_dir / "results.js",
+            ROOT / "configs" / "policy_v1.json",
+            ROOT / "configs" / "results.schema.json",
+            image_dir / "performance.png",
+            image_dir / "risk-return.png",
+            image_dir / "drawdown.png",
+            image_dir / "allocation.png",
+            image_dir / "allocation-history.png",
+            image_dir / "risk-contribution.png",
+            image_dir / "return-attribution.png",
+        ],
     )
     print(json.dumps(results, indent=2))
 
