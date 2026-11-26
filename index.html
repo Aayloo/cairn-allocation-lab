@@ -505,8 +505,8 @@
               <span class="panel-kicker">Cairn interpretation</span>
               <h2>Equity is the primary risk engine.</h2>
               <div class="large-stat">
-                <strong>61.0%</strong>
-                <span>of variance from 40.4% of capital</span>
+                <strong id="equity-risk-share">—</strong>
+                <span id="equity-capital-caption">of variance from — of capital</span>
               </div>
               <p class="panel-copy">
                 This is a structural observation, not a forecast. Commodities
@@ -527,20 +527,72 @@
             <article><span>Total cost drag</span><strong data-result="metrics.L1 TAA.total_cost" data-format="percent">—</strong></article>
           </div>
 
-          <article class="panel">
+          <div class="risk-analysis-grid">
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="panel-kicker">Concentration diagnostics</span>
+                  <h2>Capital breadth versus risk breadth</h2>
+                </div>
+                <span class="signal-chip signal-chip--neutral" id="risk-dominant-chip">—</span>
+              </div>
+              <div class="concentration-grid">
+                <div>
+                  <span>Effective capital assets</span>
+                  <strong id="effective-capital-assets">—</strong>
+                  <small>Inverse capital HHI</small>
+                </div>
+                <div>
+                  <span>Effective risk assets</span>
+                  <strong id="effective-risk-assets">—</strong>
+                  <small>Inverse absolute-risk HHI</small>
+                </div>
+                <div>
+                  <span>Top 3 capital share</span>
+                  <strong id="top3-capital-share">—</strong>
+                  <small>Largest funded positions</small>
+                </div>
+                <div>
+                  <span>Top 3 risk share</span>
+                  <strong id="top3-risk-share">—</strong>
+                  <small>Largest absolute contributors</small>
+                </div>
+              </div>
+              <p class="panel-copy panel-copy--small">
+                Risk HHI uses absolute variance contributions so negative hedge
+                contributions are not mistaken for diversification capacity.
+              </p>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <div>
+                  <span class="panel-kicker">Risk decomposition</span>
+                  <h2>Capital versus contribution</h2>
+                </div>
+                <span class="metric-note">36M covariance</span>
+              </div>
+              <div class="risk-decomposition-head" aria-hidden="true">
+                <span>Asset</span><span>Capital</span><span>Risk</span><span>Risk / capital</span>
+              </div>
+              <div class="risk-decomposition-table" id="risk-decomposition-table"></div>
+            </article>
+          </div>
+
+          <article class="panel stress-tape-panel">
             <div class="panel-head">
               <div>
-                <span class="panel-kicker">Stress agenda</span>
-                <h2>The next evidence layer</h2>
+                <span class="panel-kicker">Stress tape</span>
+                <h2>Observed losses are part of the risk record</h2>
               </div>
-              <span class="signal-chip signal-chip--pending">Scenario lab · Day 7</span>
+              <span class="signal-chip signal-chip--positive">Historical evidence</span>
             </div>
-            <div class="scenario-grid">
-              <div><span>Rates +100 bp</span><strong>Duration & credit sensitivity</strong></div>
-              <div><span>Equity −20%</span><strong>Growth shock</strong></div>
-              <div><span>Credit +150 bp</span><strong>Spread widening</strong></div>
-              <div><span>USD +5%</span><strong>HKD translation shock</strong></div>
-            </div>
+            <div class="stress-tape" id="historical-stress-tape"></div>
+            <p class="panel-copy panel-copy--small">
+              These are realised calendar-year losses from the paper portfolio.
+              Hypothetical rate, equity, credit and FX shocks belong to the
+              separate scenario engine.
+            </p>
           </article>
         </section>
 

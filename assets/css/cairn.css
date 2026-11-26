@@ -1962,6 +1962,182 @@ h1 {
   font-weight: 500;
 }
 
+.risk-analysis-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.concentration-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 22px 0 14px;
+  overflow: hidden;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+
+.concentration-grid div {
+  min-height: 112px;
+  padding: 14px;
+  background: var(--surface-2);
+}
+
+.concentration-grid span,
+.concentration-grid strong,
+.concentration-grid small {
+  display: block;
+}
+
+.concentration-grid span {
+  color: var(--faint);
+  font-size: 0.61rem;
+}
+
+.concentration-grid strong {
+  margin-top: 14px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.concentration-grid small {
+  margin-top: 3px;
+  color: var(--faint);
+  font-size: 0.56rem;
+}
+
+.risk-decomposition-head,
+.risk-decomposition-row {
+  display: grid;
+  grid-template-columns: minmax(130px, 1.2fr) 0.55fr 0.55fr 0.85fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.risk-decomposition-head {
+  padding: 12px 0 7px;
+  color: var(--faint);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.57rem;
+  text-align: right;
+}
+
+.risk-decomposition-head span:first-child {
+  text-align: left;
+}
+
+.risk-decomposition-table {
+  border-bottom: 1px solid var(--line);
+}
+
+.risk-decomposition-row {
+  min-height: 48px;
+  border-bottom: 1px solid var(--line);
+}
+
+.risk-decomposition-row:last-child {
+  border-bottom: 0;
+}
+
+.risk-decomposition-name strong,
+.risk-decomposition-name small {
+  display: block;
+}
+
+.risk-decomposition-name strong {
+  color: var(--text-soft);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.risk-decomposition-name small {
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+}
+
+.risk-decomposition-row > span:not(:first-child) {
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  text-align: right;
+}
+
+.risk-role {
+  display: inline-flex;
+  min-height: 21px;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.risk-role--amplifier {
+  color: var(--negative) !important;
+  background: var(--negative-soft);
+}
+
+.risk-role--hedge {
+  color: var(--positive) !important;
+  background: var(--positive-soft);
+}
+
+.risk-role--aligned {
+  color: var(--muted) !important;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.stress-tape-panel {
+  margin-bottom: 14px;
+}
+
+.stress-tape {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  margin: 22px 0 14px;
+  overflow: hidden;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+
+.stress-card {
+  min-height: 112px;
+  padding: 14px;
+  background: var(--surface-2);
+}
+
+.stress-card span,
+.stress-card strong,
+.stress-card small {
+  display: block;
+}
+
+.stress-card span {
+  color: var(--faint);
+  font-size: 0.61rem;
+}
+
+.stress-card strong {
+  margin-top: 19px;
+  color: var(--negative);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.stress-card small {
+  margin-top: 3px;
+  color: var(--faint);
+  font-size: 0.56rem;
+}
+
 .attribution-insight > p {
   color: var(--muted);
   font-size: 0.8rem;
@@ -2704,6 +2880,7 @@ h1 {
   .dashboard-grid,
   .allocation-hero,
   .risk-dashboard,
+  .risk-analysis-grid,
   .attribution-grid,
   .research-grid,
   .evidence-grid {
@@ -2748,6 +2925,10 @@ h1 {
 
   .year-heatmap {
     grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .stress-tape {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -2998,6 +3179,10 @@ h1 {
     min-height: 0;
   }
 
+  .stress-tape {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .process-step strong,
   .provenance-flow strong {
     margin-top: 16px;
@@ -3123,6 +3308,20 @@ h1 {
   .risk-bar-row,
   .contribution-row {
     grid-template-columns: minmax(96px, 1fr) 80px;
+  }
+
+  .risk-decomposition-head,
+  .risk-decomposition-row {
+    grid-template-columns: minmax(112px, 1fr) 0.55fr 0.55fr;
+  }
+
+  .risk-decomposition-head span:last-child,
+  .risk-decomposition-row > span:last-child {
+    display: none;
+  }
+
+  .stress-tape {
+    grid-template-columns: 1fr;
   }
 
   .risk-bar-track,

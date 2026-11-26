@@ -98,3 +98,11 @@ def test_allocation_workspace_exposes_controls_and_constraints():
     assert 'id="allocation-constraint-status"' in html
     assert 'id="normalize-allocation"' in html
     assert "Edits remain in this browser" in html
+
+
+def test_risk_workspace_exposes_concentration_and_stress_surfaces():
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    assert 'id="risk-decomposition-table"' in html
+    assert 'id="effective-risk-assets"' in html
+    assert 'id="historical-stress-tape"' in html
+    assert "Stress tape" in html

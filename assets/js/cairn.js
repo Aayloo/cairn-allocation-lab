@@ -434,6 +434,75 @@
     }).join("");
   }
 
+  function renderRiskDiagnostics() {
+    const diagnostics = results.risk_diagnostics;
+    if (!diagnostics) return;
+    const groups = groupWeights(results.latest_weights);
+    const riskGroups = groupRisk(results.risk_contribution);
+    const equityCapital = groups.find((group) => group.key === "equity")?.value || 0;
+    const equityRisk = riskGroups.find((group) => group.key === "equity")?.value || 0;
+
+    setText("#equity-risk-share", format(equityRisk, "percent"));
+    setText("#equity-capital-caption", `of variance from ${format(equityCapital, "percent")} of capital`);
+    setText("#effective-capital-assets", Number(diagnostics.effective_capital_assets).toFixed(1));
+    setText("#effective-risk-assets", Number(diagnostics.effective_risk_assets).toFixed(1));
+    setText("#top3-capital-share", format(diagnostics.top3_capital_share, "percent"));
+    setText("#top3-risk-share", format(diagnostics.top3_risk_share_abs, "percent"));
+    const dominant = diagnostics.dominant_risk_asset;
+    setText(
+      "#risk-dominant-chip",
+      `${dominant} largest risk · ${format(diagnostics.dominant_risk_share, "percent")}`
+    );
+
+    const container = document.querySelector("#risk-decomposition-table");
+    if (!container) return;
+    const contributors = Object.entries(results.risk_contribution || {})
+      .sort((a, b) => Number(b[1]) - Number(a[1]));
+    container.innerHTML = contributors.map(([ticker, risk]) => {
+      const capital = Number(results.latest_weights?.[ticker] || 0);
+      const ratio = Number(diagnostics.risk_to_capital?.[ticker] || 0);
+      const role = ratio < 0 ? "hedge" : ratio > 1.1 ? "amplifier" : "aligned";
+      const roleLabel = ratio < 0
+        ? `hedge ${ratio.toFixed(2)}×`
+        : `${role} ${ratio.toFixed(2)}×`;
+      return `
+        <div class="risk-decomposition-row">
+          <span class="risk-decomposition-name">
+            <strong>${results.ticker_labels?.[ticker] || ticker}</strong>
+            <small>${ticker}</small>
+          </span>
+          <span>${format(capital, "percent")}</span>
+          <span>${format(risk, "percent")}</span>
+          <span class="risk-role risk-role--${role}">${roleLabel}</span>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function renderHistoricalStress() {
+    const container = document.querySelector("#historical-stress-tape");
+    if (!container) return;
+    const losses = Object.entries(results.yearly_returns || {})
+      .filter(([, value]) => Number(value) < 0)
+      .sort((a, b) => Number(a[1]) - Number(b[1]));
+    const maxDrawdown = results.metrics?.["L1 TAA"]?.max_drawdown;
+    const cards = losses.map(([year, value]) => `
+      <div class="stress-card">
+        <span>${year} calendar year</span>
+        <strong>${signedPercent(value)}</strong>
+        <small>Realised paper-portfolio return</small>
+      </div>
+    `);
+    cards.push(`
+      <div class="stress-card">
+        <span>Full-sample peak-to-trough</span>
+        <strong>${format(maxDrawdown, "percent")}</strong>
+        <small>Maximum drawdown</small>
+      </div>
+    `);
+    container.innerHTML = cards.join("");
+  }
+
   function renderContributionBars() {
     const container = document.querySelector("#contribution-bars");
     if (!container) return;
@@ -488,6 +557,8 @@
     renderYearStrip();
     renderWeightTable();
     renderRiskBars();
+    renderRiskDiagnostics();
+    renderHistoricalStress();
     renderContributionBars();
     renderHeatmap();
     renderBenchmarkGap();

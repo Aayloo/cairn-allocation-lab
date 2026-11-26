@@ -220,6 +220,11 @@ try {
           document.querySelector("#use-policy-allocation").click();
           await new Promise((resolve) => setTimeout(resolve, 60));
           const restoredStatus = document.querySelector("#allocation-constraint-status").textContent.trim();
+          document.querySelector('.sidebar [data-view-target="risk"]').click();
+          await new Promise((resolve) => setTimeout(resolve, 60));
+          const riskRows = document.querySelectorAll(".risk-decomposition-row").length;
+          const effectiveRiskAssets = document.querySelector("#effective-risk-assets").textContent.trim();
+          const stressCards = document.querySelectorAll(".stress-card").length;
           document.querySelector('.sidebar [data-view-target="command"]').click();
           await new Promise((resolve) => setTimeout(resolve, 60));
           const trigger = document.querySelector("#command-trigger");
@@ -239,6 +244,9 @@ try {
             invalidStatus,
             headlineInvalid,
             restoredStatus,
+            riskRows,
+            effectiveRiskAssets,
+            stressCards,
           };
         })()`,
       });
@@ -253,6 +261,9 @@ try {
         !value.invalidStatus.includes("issue") ||
         value.headlineInvalid !== "true" ||
         value.restoredStatus !== "Pass" ||
+        value.riskRows !== 8 ||
+        value.effectiveRiskAssets === "—" ||
+        value.stressCards !== 5 ||
         value.workspaceChecks.some((check) => !check.visible || check.overflow || !check.heading)
       ) {
         throw new Error(`desktop interaction failed: ${JSON.stringify(value)}`);

@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-26 — Risk diagnostics
+
+- Added effective asset breadth from capital and absolute-risk HHI measures.
+- Added top-three concentration, dominant risk contributor and asset-level
+  risk-to-capital diagnostics.
+- Added a realised historical stress tape covering loss years and maximum
+  drawdown without presenting hypothetical scenarios as history.
+- Added risk-diagnostic fields to the versioned public-results contract.
+- Marked the risk milestone complete and moved Attribution to Next.
+
 ## 2026-11-26 — Allocation studio
 
 - Added an interactive eight-asset allocation draft with synchronized sliders

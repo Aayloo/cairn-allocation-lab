@@ -10,7 +10,7 @@ from typing import Any
 import pandas as pd
 
 
-CONTRACT_VERSION = "cairn-results-v1"
+CONTRACT_VERSION = "cairn-results-v2"
 TEXT_SUFFIXES = {".css", ".csv", ".html", ".js", ".json", ".md", ".toml", ".txt", ".xml"}
 REQUIRED_METRICS = ("L1 SAA", "L1 TAA", "60/40", "Equal weight")
 REQUIRED_METRIC_FIELDS = (
@@ -83,6 +83,24 @@ def validate_results(results: dict[str, Any]) -> None:
         values = results.get(field)
         if not isinstance(values, dict) or not values:
             raise ValueError(f"{field} must be a non-empty object.")
+
+    diagnostics = results.get("risk_diagnostics")
+    if not isinstance(diagnostics, dict):
+        raise ValueError("Risk concentration diagnostics are missing.")
+    required_diagnostics = {
+        "capital_hhi",
+        "effective_capital_assets",
+        "top3_capital_share",
+        "risk_hhi_abs",
+        "effective_risk_assets",
+        "top3_risk_share_abs",
+        "dominant_risk_asset",
+        "dominant_risk_share",
+        "negative_risk_assets",
+        "risk_to_capital",
+    }
+    if required_diagnostics - set(diagnostics):
+        raise ValueError("Risk concentration diagnostics are incomplete.")
 
 
 def write_artifact_contract(

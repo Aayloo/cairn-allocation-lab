@@ -25,6 +25,7 @@ from l1.analytics import (
 from l1.backtest import build_targets, make_research_frame, simulate, summarize
 from l1.contract import CONTRACT_VERSION, validate_results, write_artifact_contract
 from l1.data import load_prices, write_data_manifest
+from l1.risk import concentration_summary, risk_to_capital
 
 
 def constant_targets(
@@ -91,6 +92,8 @@ def main() -> None:
     risk_contribution = (
         latest_weights * (covariance @ latest_weights) / portfolio_variance
     )
+    risk_diagnostics = concentration_summary(latest_weights, risk_contribution)
+    risk_diagnostics["risk_to_capital"] = risk_to_capital(latest_weights, risk_contribution)
     annual_contribution = taa_contributions.mean() * 12
 
     yearly_returns = (
@@ -149,6 +152,7 @@ def main() -> None:
         "latest_weights": latest_weights.round(4).to_dict(),
         "policy_weights": policy,
         "risk_contribution": risk_contribution.round(4).to_dict(),
+        "risk_diagnostics": risk_diagnostics,
         "annual_return_contribution": annual_contribution.round(4).to_dict(),
         "signals": signals.to_dict(),
         "yearly_returns": {str(year): round(float(value), 4) for year, value in yearly_returns.items()},

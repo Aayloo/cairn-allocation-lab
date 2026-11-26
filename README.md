@@ -47,7 +47,8 @@ negative result visible rather than tuning the rules after seeing the answer.
 - **Command** — latest decision, KPIs and portfolio pulse.
 - **Allocation** — interactive policy/current drafts, constraint checks and
   estimated rebalance cost.
-- **Risk** — capital versus variance contribution and stress agenda.
+- **Risk** — capital versus variance contribution, concentration diagnostics and
+  realised historical stress.
 - **Attribution** — return sources and calendar-year dispersion.
 - **Research** — hypothesis, decision record and falsification conditions.
 - **Evidence** — data lineage, result contract, artifact hashes and downloads.

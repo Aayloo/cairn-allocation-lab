@@ -1,5 +1,5 @@
 window.PORTFOLIO_RESULTS = {
-  "contract_version": "cairn-results-v1",
+  "contract_version": "cairn-results-v2",
   "as_of": "2026-10-31",
   "market_data_through": "2026-10-30",
   "start": "2008-06-30",
@@ -94,6 +94,29 @@ window.PORTFOLIO_RESULTS = {
     "GLD": 0.139,
     "DBC": -0.0107,
     "BIL": 0.0019
+  },
+  "risk_diagnostics": {
+    "capital_hhi": 0.1463,
+    "effective_capital_assets": 6.84,
+    "top3_capital_share": 0.5585,
+    "risk_hhi_abs": 0.1771,
+    "effective_risk_assets": 5.65,
+    "top3_risk_share_abs": 0.5959,
+    "dominant_risk_asset": "SPY",
+    "dominant_risk_share": 0.2746,
+    "negative_risk_assets": [
+      "DBC"
+    ],
+    "risk_to_capital": {
+      "SPY": 1.3654,
+      "VEA": 1.6789,
+      "EEM": 1.7868,
+      "IEF": 0.6405,
+      "LQD": 0.8502,
+      "GLD": 1.4414,
+      "DBC": -0.2066,
+      "BIL": 0.0193
+    }
   },
   "annual_return_contribution": {
     "SPY": 0.0211,

@@ -15,11 +15,12 @@
     "risk_contribution",
     "annual_return_contribution",
     "signals",
-    "yearly_returns"
+    "yearly_returns",
+    "risk_diagnostics"
   ],
   "properties": {
     "contract_version": {
-      "const": "cairn-results-v1"
+      "const": "cairn-results-v2"
     },
     "base_currency": {
       "const": "HKD"
@@ -47,6 +48,21 @@
         "minimum": 0,
         "maximum": 1
       }
+    },
+    "risk_diagnostics": {
+      "type": "object",
+      "required": [
+        "capital_hhi",
+        "effective_capital_assets",
+        "top3_capital_share",
+        "risk_hhi_abs",
+        "effective_risk_assets",
+        "top3_risk_share_abs",
+        "dominant_risk_asset",
+        "dominant_risk_share",
+        "negative_risk_assets",
+        "risk_to_capital"
+      ]
     }
   }
 }
