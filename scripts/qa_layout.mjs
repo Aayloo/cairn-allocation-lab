@@ -207,6 +207,21 @@ try {
           }
           document.querySelector('.sidebar [data-view-target="command"]').click();
           await new Promise((resolve) => setTimeout(resolve, 60));
+          document.querySelector('.sidebar [data-view-target="allocation"]').click();
+          await new Promise((resolve) => setTimeout(resolve, 60));
+          document.querySelector("#use-policy-allocation").click();
+          const policyStatus = document.querySelector("#allocation-constraint-status").textContent.trim();
+          const spyNumber = document.querySelector('[data-allocation-ticker="SPY"][data-allocation-control-type="number"]');
+          spyNumber.value = "50";
+          spyNumber.dispatchEvent(new Event("input", { bubbles: true }));
+          await new Promise((resolve) => setTimeout(resolve, 60));
+          const invalidStatus = document.querySelector("#allocation-constraint-status").textContent.trim();
+          const headlineInvalid = spyNumber.getAttribute("aria-invalid");
+          document.querySelector("#use-policy-allocation").click();
+          await new Promise((resolve) => setTimeout(resolve, 60));
+          const restoredStatus = document.querySelector("#allocation-constraint-status").textContent.trim();
+          document.querySelector('.sidebar [data-view-target="command"]').click();
+          await new Promise((resolve) => setTimeout(resolve, 60));
           const trigger = document.querySelector("#command-trigger");
           trigger.click();
           await new Promise((resolve) => setTimeout(resolve, 80));
@@ -220,6 +235,10 @@ try {
             activeLabel: document.querySelector("#current-workspace").textContent.trim(),
             chartReady: document.querySelector("#performance-chart").width > 200,
             contractStatus: document.querySelector("#contract-status").textContent.trim(),
+            policyStatus,
+            invalidStatus,
+            headlineInvalid,
+            restoredStatus,
           };
         })()`,
       });
@@ -230,6 +249,10 @@ try {
         value.activeLabel !== "Command" ||
         !value.chartReady ||
         value.contractStatus !== "Verified" ||
+        value.policyStatus !== "Pass" ||
+        !value.invalidStatus.includes("issue") ||
+        value.headlineInvalid !== "true" ||
+        value.restoredStatus !== "Pass" ||
         value.workspaceChecks.some((check) => !check.visible || check.overflow || !check.heading)
       ) {
         throw new Error(`desktop interaction failed: ${JSON.stringify(value)}`);

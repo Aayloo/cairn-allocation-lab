@@ -8,8 +8,8 @@ reproducible artifact and a passing test surface.
 | --- | --- | --- | --- |
 | Foundation | Complete | Brand, product brief and command-center shell | Cairn identity, responsive app shell, live KPIs and working navigation |
 | Data contract | Complete | Versioned inputs and provenance | typed result schema, manifest, data lineage, artifact hashes and source status |
-| Allocation | Next | Policy, current and proposed weights | policy/current dilution, asset drill-down and constraint checks |
-| Risk | Planned | Capital-versus-risk analysis | risk decomposition, concentration diagnostics and stress tests |
+| Allocation | Complete | Policy, current and proposed weights | policy/current dilution, asset drill-down and constraint checks |
+| Risk | Next | Capital-versus-risk analysis | risk decomposition, concentration diagnostics and stress tests |
 | Attribution | Planned | Return and risk explanation | contribution reconciliation, yearly heatmap and benchmark gap |
 | Research ledger | Planned | Decision history and falsifiability | decision cards, invalidation conditions and version history |
 | Scenario lab | Planned | Constraint-aware shocks | rate, equity, credit and FX scenario calculations |

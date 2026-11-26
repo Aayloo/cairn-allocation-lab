@@ -410,6 +410,43 @@
             </aside>
           </div>
 
+          <article class="panel allocation-builder" aria-labelledby="allocation-builder-title">
+            <div class="panel-head">
+              <div>
+                <span class="panel-kicker">Allocation studio</span>
+                <h2 id="allocation-builder-title">Draft a compliant rebalance</h2>
+              </div>
+              <div class="builder-actions">
+                <button class="text-action" type="button" id="use-current-allocation">Use current</button>
+                <button class="text-action" type="button" id="use-policy-allocation">Use policy</button>
+                <button class="text-action" type="button" id="normalize-allocation">Align to 100%</button>
+              </div>
+            </div>
+
+            <p class="panel-copy panel-copy--small">
+              This is a research draft. Edits remain in this browser and do not
+              alter the frozen policy, backtest or published performance history.
+            </p>
+
+            <div class="allocation-controls" id="allocation-controls"></div>
+
+            <div class="allocation-summary" aria-live="polite">
+              <div><span>Total</span><strong id="allocation-total">—</strong></div>
+              <div><span>Equity</span><strong id="allocation-equity">—</strong></div>
+              <div><span>Cash</span><strong id="allocation-cash">—</strong></div>
+              <div><span>One-way turnover</span><strong id="allocation-turnover">—</strong></div>
+              <div><span>Estimated cost</span><strong id="allocation-cost">—</strong></div>
+            </div>
+
+            <div class="constraint-result" id="allocation-constraint-result" role="status">
+              <div class="constraint-result-head">
+                <span class="panel-kicker">Constraint check</span>
+                <span class="signal-chip signal-chip--pending" id="allocation-constraint-status">Checking</span>
+              </div>
+              <ul id="allocation-constraint-list"></ul>
+            </div>
+          </article>
+
           <article class="panel">
             <div class="panel-head">
               <div>

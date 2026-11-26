@@ -1523,6 +1523,202 @@ h1 {
   font-weight: 500;
 }
 
+.allocation-builder {
+  margin-bottom: 14px;
+  background:
+    radial-gradient(circle at 88% 0, rgba(126, 169, 247, 0.08), transparent 20rem),
+    var(--surface);
+}
+
+.builder-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  justify-content: flex-end;
+}
+
+.allocation-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.allocation-control {
+  padding: 13px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+
+.allocation-control.is-invalid {
+  background: rgba(244, 135, 122, 0.055);
+  border-color: rgba(244, 135, 122, 0.35);
+}
+
+.allocation-control-head {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.allocation-control-head span {
+  display: flex;
+  min-width: 0;
+  gap: 7px;
+  align-items: center;
+  color: var(--text-soft);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.allocation-control-head i {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+}
+
+.allocation-control-head small {
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 0.57rem;
+  white-space: nowrap;
+}
+
+.allocation-control-inputs {
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) 74px;
+  gap: 11px;
+  align-items: center;
+  margin-top: 11px;
+}
+
+.allocation-control input[type="range"] {
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.allocation-number {
+  position: relative;
+}
+
+.allocation-number input {
+  width: 100%;
+  min-height: 40px;
+  padding: 7px 24px 7px 9px;
+  color: var(--text);
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-align: right;
+}
+
+.allocation-number span {
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  transform: translateY(-50%);
+}
+
+.allocation-control.is-invalid .allocation-number input {
+  border-color: var(--negative);
+}
+
+.allocation-field-error {
+  display: block;
+  margin-top: 7px;
+  color: var(--negative);
+  font-size: 0.61rem;
+}
+
+.allocation-summary {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 12px;
+  overflow: hidden;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+
+.allocation-summary div {
+  min-height: 68px;
+  padding: 12px;
+  background: var(--bg-raised);
+}
+
+.allocation-summary span,
+.allocation-summary strong {
+  display: block;
+}
+
+.allocation-summary span {
+  color: var(--faint);
+  font-size: 0.59rem;
+}
+
+.allocation-summary strong {
+  margin-top: 10px;
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.constraint-result {
+  margin-top: 12px;
+  padding: 13px 14px;
+  background: rgba(255, 255, 255, 0.018);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+}
+
+.constraint-result-head {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.constraint-result ul {
+  display: grid;
+  gap: 6px;
+  padding: 0;
+  margin: 11px 0 0;
+  list-style: none;
+}
+
+.constraint-result li {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.constraint-result li::before {
+  color: var(--positive);
+  content: "✓";
+  font-family: var(--font-mono);
+}
+
+.constraint-result li.is-error::before {
+  color: var(--negative);
+  content: "!";
+}
+
 .process-flow {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2529,6 +2725,10 @@ h1 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .allocation-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .decision-record {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -2789,6 +2989,10 @@ h1 {
     grid-template-columns: 1fr;
   }
 
+  .allocation-controls {
+    grid-template-columns: 1fr;
+  }
+
   .process-step,
   .provenance-flow div {
     min-height: 0;
@@ -2813,6 +3017,10 @@ h1 {
   }
 
   .decision-record {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .allocation-summary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -2924,6 +3132,14 @@ h1 {
 
   .year-heatmap {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .builder-actions {
+    justify-content: flex-start;
+  }
+
+  .allocation-summary {
+    grid-template-columns: 1fr;
   }
 
   .contract-grid {

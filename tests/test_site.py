@@ -90,3 +90,11 @@ def test_public_copy_does_not_use_build_duration_framing():
     assert "10 working" not in text
     assert "ten working days" not in text
     assert "day 1 of 10" not in text
+
+
+def test_allocation_workspace_exposes_controls_and_constraints():
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    assert 'id="allocation-controls"' in html
+    assert 'id="allocation-constraint-status"' in html
+    assert 'id="normalize-allocation"' in html
+    assert "Edits remain in this browser" in html

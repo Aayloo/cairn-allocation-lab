@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-11-26 — Allocation studio
+
+- Added an interactive eight-asset allocation draft with synchronized sliders
+  and numeric percentage inputs.
+- Added local draft persistence, current/policy reset actions and normalization.
+- Added live fully-invested, equity-range, cash-range and single-asset checks
+  with inline field errors and a constraint summary.
+- Added turnover and estimated transaction-cost feedback without mutating the
+  frozen policy or published performance history.
+- Marked the allocation milestone complete and moved Risk to Next.
+
 ## 2026-11-25 — Data contract
 
 - Added a versioned public-results schema and runtime validation for currency,

@@ -44,6 +44,17 @@
     BIL: "cash",
   };
 
+  const allocationStorageKey = "cairn-allocation-draft-v1";
+  const allocationLimits = {
+    singleAssetMax: 0.4,
+    equityMin: 0.3,
+    equityMax: 0.6,
+    cashMin: 0.05,
+    cashMax: 0.25,
+    tolerance: 0.001,
+  };
+  let draftWeights = {};
+
   const commands = [
     { title: "Open command center", detail: "Portfolio overview and latest decision", icon: "command", target: "command", shortcut: "G D" },
     { title: "Inspect allocation", detail: "Policy weights, drift and constraints", icon: "allocation", target: "allocation", shortcut: "G A" },
@@ -187,6 +198,218 @@
     const total = Object.values(results.latest_weights || {}).reduce((sum, value) => sum + Number(value), 0);
     const totalElement = document.querySelector("#weight-total");
     if (totalElement) totalElement.textContent = format(total, "percent");
+  }
+
+  function allocationGroup(ticker) {
+    return tickerClasses[ticker] || "cash";
+  }
+
+  function validDraft(candidate) {
+    const tickers = Object.keys(results.policy_weights || {});
+    return candidate
+      && tickers.every((ticker) => Number.isFinite(Number(candidate[ticker])))
+      && Object.keys(candidate).length === tickers.length;
+  }
+
+  function loadAllocationDraft() {
+    const fallback = { ...(results.latest_weights || {}) };
+    try {
+      const stored = JSON.parse(localStorage.getItem(allocationStorageKey) || "null");
+      if (validDraft(stored)) return Object.fromEntries(
+        Object.keys(fallback).map((ticker) => [ticker, Number(stored[ticker])])
+      );
+    } catch {
+      // Fall back to the frozen current allocation.
+    }
+    return fallback;
+  }
+
+  function saveAllocationDraft() {
+    try {
+      localStorage.setItem(allocationStorageKey, JSON.stringify(draftWeights));
+    } catch {
+      // The draft remains usable for the current page session.
+    }
+  }
+
+  function renderAllocationControls() {
+    const container = document.querySelector("#allocation-controls");
+    if (!container) return;
+    container.innerHTML = Object.keys(results.policy_weights || {}).map((ticker) => {
+      const group = allocationGroup(ticker);
+      return `
+        <div class="allocation-control" data-allocation-control="${ticker}">
+          <div class="allocation-control-head">
+            <span>
+              <i class="risk-fill--${group}" aria-hidden="true"></i>
+              ${results.ticker_labels?.[ticker] || ticker}
+            </span>
+            <small>${ticker} · current ${format(results.latest_weights?.[ticker], "percent")}</small>
+          </div>
+          <div class="allocation-control-inputs">
+            <input
+              type="range"
+              min="0"
+              max="60"
+              step="0.1"
+              value="${(draftWeights[ticker] * 100).toFixed(1)}"
+              data-allocation-ticker="${ticker}"
+              data-allocation-control-type="range"
+              aria-label="${ticker} allocation slider"
+            >
+            <span class="allocation-number">
+              <input
+                type="number"
+                min="0"
+                max="100"
+                step="0.1"
+                inputmode="decimal"
+                value="${(draftWeights[ticker] * 100).toFixed(1)}"
+                data-allocation-ticker="${ticker}"
+                data-allocation-control-type="number"
+                aria-label="${ticker} allocation percent"
+                aria-describedby="allocation-error-${ticker}"
+              >
+              <span aria-hidden="true">%</span>
+            </span>
+          </div>
+          <small class="allocation-field-error" id="allocation-error-${ticker}" hidden></small>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function setAllocationDraft(weights) {
+    const tickers = Object.keys(results.policy_weights || {});
+    draftWeights = Object.fromEntries(
+      tickers.map((ticker) => [ticker, Math.max(0, Math.min(1, Number(weights[ticker] || 0)))])
+    );
+    document.querySelectorAll("[data-allocation-ticker]").forEach((input) => {
+      const ticker = input.dataset.allocationTicker;
+      input.value = (draftWeights[ticker] * 100).toFixed(1);
+    });
+    updateAllocationDraft();
+  }
+
+  function invalidateAllocationControl(ticker, message = "") {
+    const control = document.querySelector(`[data-allocation-control="${ticker}"]`);
+    const error = document.querySelector(`#allocation-error-${ticker}`);
+    const inputs = document.querySelectorAll(`[data-allocation-ticker="${ticker}"]`);
+    if (!control || !error) return;
+    const invalid = Boolean(message);
+    control.classList.toggle("is-invalid", invalid);
+    error.hidden = !invalid;
+    error.textContent = message;
+    inputs.forEach((input) => {
+      if (invalid) input.setAttribute("aria-invalid", "true");
+      else input.removeAttribute("aria-invalid");
+    });
+  }
+
+  function updateAllocationDraft() {
+    const tickers = Object.keys(results.policy_weights || {});
+    const current = results.latest_weights || {};
+    const total = tickers.reduce((sum, ticker) => sum + draftWeights[ticker], 0);
+    const equity = Object.keys(draftWeights)
+      .filter((ticker) => allocationGroup(ticker) === "equity")
+      .reduce((sum, ticker) => sum + draftWeights[ticker], 0);
+    const cash = Object.keys(draftWeights)
+      .filter((ticker) => allocationGroup(ticker) === "cash")
+      .reduce((sum, ticker) => sum + draftWeights[ticker], 0);
+    const turnover = 0.5 * tickers.reduce(
+      (sum, ticker) => sum + Math.abs(draftWeights[ticker] - Number(current[ticker] || 0)),
+      0
+    );
+    const cost = turnover * Number(results.cost_bps || 0) / 10_000;
+
+    setText("#allocation-total", format(total, "percent"));
+    setText("#allocation-equity", format(equity, "percent"));
+    setText("#allocation-cash", format(cash, "percent"));
+    setText("#allocation-turnover", format(turnover, "percent"));
+    setText("#allocation-cost", format(cost, "bps"));
+
+    const constraints = [
+      {
+        label: `Fully invested: ${format(total, "percent")}`,
+        pass: Math.abs(total - 1) <= allocationLimits.tolerance,
+      },
+      {
+        label: `Equity within 30%–60%: ${format(equity, "percent")}`,
+        pass: equity >= allocationLimits.equityMin && equity <= allocationLimits.equityMax,
+      },
+      {
+        label: `Cash within 5%–25%: ${format(cash, "percent")}`,
+        pass: cash >= allocationLimits.cashMin && cash <= allocationLimits.cashMax,
+      },
+    ];
+
+    const oversized = tickers.filter((ticker) => {
+      const invalid = draftWeights[ticker] > allocationLimits.singleAssetMax + 1e-9;
+      invalidateAllocationControl(
+        ticker,
+        invalid ? `Reduce ${ticker} to 40% or below.` : ""
+      );
+      return invalid;
+    });
+    constraints.push({
+      label: oversized.length
+        ? `Single-sleeve ceiling breached: ${oversized.join(", ")}`
+        : "Single-sleeve ceiling: every asset is 40% or below",
+      pass: oversized.length === 0,
+    });
+
+    const list = document.querySelector("#allocation-constraint-list");
+    if (list) {
+      list.innerHTML = constraints.map((constraint) => `
+        <li class="${constraint.pass ? "" : "is-error"}">${constraint.label}</li>
+      `).join("");
+    }
+    const status = document.querySelector("#allocation-constraint-status");
+    const failures = constraints.filter((constraint) => !constraint.pass).length;
+    if (status) {
+      status.textContent = failures ? `${failures} issue${failures === 1 ? "" : "s"}` : "Pass";
+      status.classList.remove("signal-chip--pending", "signal-chip--positive", "signal-chip--error");
+      status.classList.add(failures ? "signal-chip--error" : "signal-chip--positive");
+    }
+    saveAllocationDraft();
+  }
+
+  function initializeAllocationBuilder() {
+    if (!document.querySelector("#allocation-controls")) return;
+    draftWeights = loadAllocationDraft();
+    renderAllocationControls();
+    setAllocationDraft(draftWeights);
+
+    document.querySelectorAll("[data-allocation-ticker]").forEach((input) => {
+      const update = () => {
+        const ticker = input.dataset.allocationTicker;
+        const percentage = Math.max(0, Math.min(100, Number(input.value) || 0));
+        draftWeights[ticker] = percentage / 100;
+        document.querySelectorAll(`[data-allocation-ticker="${ticker}"]`).forEach((peer) => {
+          if (peer !== input) peer.value = percentage.toFixed(1);
+        });
+        updateAllocationDraft();
+      };
+      input.addEventListener("input", update);
+      input.addEventListener("change", update);
+    });
+
+    document.querySelector("#use-current-allocation")?.addEventListener("click", () => {
+      setAllocationDraft(results.latest_weights || {});
+      showToast("Current allocation loaded into the draft.");
+    });
+    document.querySelector("#use-policy-allocation")?.addEventListener("click", () => {
+      setAllocationDraft(results.policy_weights || {});
+      showToast("Policy allocation loaded into the draft.");
+    });
+    document.querySelector("#normalize-allocation")?.addEventListener("click", () => {
+      const total = Object.values(draftWeights).reduce((sum, value) => sum + value, 0);
+      const source = total > 0 ? draftWeights : results.policy_weights;
+      const sourceTotal = Object.values(source).reduce((sum, value) => sum + value, 0);
+      setAllocationDraft(Object.fromEntries(
+        Object.keys(source).map((ticker) => [ticker, source[ticker] / sourceTotal])
+      ));
+    });
   }
 
   function renderRiskBars() {
@@ -675,6 +898,7 @@
 
   renderPrimitiveResults();
   renderStaticModules();
+  initializeAllocationBuilder();
   loadDataContract();
   const initialWorkspace = window.location.hash.replace("#", "");
   showWorkspace(workspaceNames[initialWorkspace] ? initialWorkspace : "command", { updateHash: false });
