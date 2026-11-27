@@ -10,7 +10,7 @@ from typing import Any
 import pandas as pd
 
 
-CONTRACT_VERSION = "cairn-results-v2"
+CONTRACT_VERSION = "cairn-results-v3"
 TEXT_SUFFIXES = {".css", ".csv", ".html", ".js", ".json", ".md", ".toml", ".txt", ".xml"}
 REQUIRED_METRICS = ("L1 SAA", "L1 TAA", "60/40", "Equal weight")
 REQUIRED_METRIC_FIELDS = (
@@ -101,6 +101,27 @@ def validate_results(results: dict[str, Any]) -> None:
     }
     if required_diagnostics - set(diagnostics):
         raise ValueError("Risk concentration diagnostics are incomplete.")
+
+    reconciliation = results.get("attribution_summary")
+    if not isinstance(reconciliation, dict):
+        raise ValueError("Attribution reconciliation is missing.")
+    required_reconciliation = {
+        "gross_contribution",
+        "annual_cost",
+        "net_arithmetic_return",
+        "compounding_residual",
+        "reconciled_cagr",
+        "identity_error",
+    }
+    if required_reconciliation - set(reconciliation):
+        raise ValueError("Attribution reconciliation is incomplete.")
+    if abs(float(reconciliation["identity_error"])) > 1e-8:
+        raise ValueError("Attribution reconciliation does not close.")
+
+    if not isinstance(results.get("contribution_groups"), dict):
+        raise ValueError("Group contributions are missing.")
+    if not isinstance(results.get("yearly_returns_by_strategy"), dict):
+        raise ValueError("Yearly strategy returns are missing.")
 
 
 def write_artifact_contract(

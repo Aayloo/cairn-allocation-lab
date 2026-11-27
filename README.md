@@ -49,7 +49,8 @@ negative result visible rather than tuning the rules after seeing the answer.
   estimated rebalance cost.
 - **Risk** — capital versus variance contribution, concentration diagnostics and
   realised historical stress.
-- **Attribution** — return sources and calendar-year dispersion.
+- **Attribution** — contribution reconciliation, sleeve totals and calendar-year
+  comparison with the 60/40 reference.
 - **Research** — hypothesis, decision record and falsification conditions.
 - **Evidence** — data lineage, result contract, artifact hashes and downloads.
 

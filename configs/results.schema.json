@@ -16,11 +16,14 @@
     "annual_return_contribution",
     "signals",
     "yearly_returns",
-    "risk_diagnostics"
+    "risk_diagnostics",
+    "attribution_summary",
+    "contribution_groups",
+    "yearly_returns_by_strategy"
   ],
   "properties": {
     "contract_version": {
-      "const": "cairn-results-v2"
+      "const": "cairn-results-v3"
     },
     "base_currency": {
       "const": "HKD"
@@ -62,6 +65,17 @@
         "dominant_risk_share",
         "negative_risk_assets",
         "risk_to_capital"
+      ]
+    },
+    "attribution_summary": {
+      "type": "object",
+      "required": [
+        "gross_contribution",
+        "annual_cost",
+        "net_arithmetic_return",
+        "compounding_residual",
+        "reconciled_cagr",
+        "identity_error"
       ]
     }
   }

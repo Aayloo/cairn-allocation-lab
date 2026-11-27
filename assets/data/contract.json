@@ -1,7 +1,7 @@
 {
-  "contract": "cairn-results-v2",
+  "contract": "cairn-results-v3",
   "schema": "configs/results.schema.json",
-  "build_id": "b2061f40dd71aa2e",
+  "build_id": "7bf2434ac409e5ca",
   "validation_rules": [
     "HKD base currency",
     "Long-only current weights",
@@ -27,20 +27,20 @@
       "bytes": 220
     },
     "assets/data/results.json": {
-      "sha256": "660417d3e992649bd2895392ab95765872698ce253aef0ef58ce8bf3b633824c",
-      "bytes": 4021
+      "sha256": "1c58e004a33cb3131805e5dbcdb5bdb3260b0ad04e7672e17396cfa36f60ea90",
+      "bytes": 6400
     },
     "assets/data/results.js": {
-      "sha256": "530acd0a11df435dbe6e6aebaca95a130e0a9281d672c71a42e7d393e7ae2171",
-      "bytes": 4049
+      "sha256": "17fb7c5cdc8312ec8d9cb5fdbbbec46d900632c22143884cd8d2973794e28efb",
+      "bytes": 6428
     },
     "configs/policy_v1.json": {
       "sha256": "39625811152b35fefb42730363307dc2af6c47d8ed3903926cb546d20e8181f6",
       "bytes": 892
     },
     "configs/results.schema.json": {
-      "sha256": "f6e7241e370747495b50fe2b8e83979a257e48b9367d84f167755cbdc9055ecd",
-      "bytes": 1537
+      "sha256": "1739ad76548d6f9d4daabcab9c52892dd69a4084ca24fcfd5f0ce1b7ce4d4d21",
+      "bytes": 1883
     },
     "assets/img/performance.png": {
       "sha256": "d1588b915ae95285305f8660a618c4275b00b523e20a29c8b8648e722b17334e",

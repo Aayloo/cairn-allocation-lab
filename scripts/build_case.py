@@ -12,6 +12,11 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from l1.attribution import (
+    group_contributions,
+    reconcile_attribution,
+    yearly_returns_by_strategy,
+)
 from l1.analytics import (
     PALETTE,
     save_allocation,
@@ -95,12 +100,15 @@ def main() -> None:
     risk_diagnostics = concentration_summary(latest_weights, risk_contribution)
     risk_diagnostics["risk_to_capital"] = risk_to_capital(latest_weights, risk_contribution)
     annual_contribution = taa_contributions.mean() * 12
-
-    yearly_returns = (
-        taa_history["net_return"]
-        .groupby(taa_history.index.year)
-        .apply(lambda values: (1 + values).prod() - 1)
+    attribution_summary = reconcile_attribution(
+        taa_history,
+        annual_contribution,
+        metrics["L1 TAA"]["cagr"],
     )
+    contribution_groups = group_contributions(annual_contribution)
+    yearly_strategy_returns = yearly_returns_by_strategy(histories)
+
+    yearly_returns = yearly_strategy_returns["L1 TAA"]
     signals = latest_signals(monthly, int(config["trend_lookback_months"])).round(4)
 
     image_dir = ROOT / "assets" / "img"
@@ -154,8 +162,11 @@ def main() -> None:
         "risk_contribution": risk_contribution.round(4).to_dict(),
         "risk_diagnostics": risk_diagnostics,
         "annual_return_contribution": annual_contribution.round(4).to_dict(),
+        "attribution_summary": attribution_summary,
+        "contribution_groups": contribution_groups,
         "signals": signals.to_dict(),
-        "yearly_returns": {str(year): round(float(value), 4) for year, value in yearly_returns.items()},
+        "yearly_returns": yearly_returns,
+        "yearly_returns_by_strategy": yearly_strategy_returns,
         "ticker_labels": config["tickers"],
         "notes": {
             "return_basis": "Adjusted-close total return, translated from USD to HKD without hedging.",

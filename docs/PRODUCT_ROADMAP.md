@@ -10,8 +10,8 @@ reproducible artifact and a passing test surface.
 | Data contract | Complete | Versioned inputs and provenance | typed result schema, manifest, data lineage, artifact hashes and source status |
 | Allocation | Complete | Policy, current and proposed weights | policy/current dilution, asset drill-down and constraint checks |
 | Risk | Complete | Capital-versus-risk analysis | risk decomposition, concentration diagnostics and stress tests |
-| Attribution | Next | Return and risk explanation | contribution reconciliation, yearly heatmap and benchmark gap |
-| Research ledger | Planned | Decision history and falsifiability | decision cards, invalidation conditions and version history |
+| Attribution | Complete | Return and risk explanation | contribution reconciliation, yearly heatmap and benchmark gap |
+| Research ledger | Next | Decision history and falsifiability | decision cards, invalidation conditions and version history |
 | Scenario lab | Planned | Constraint-aware shocks | rate, equity, credit and FX scenario calculations |
 | Explain layer | Planned | Deterministic research narration | provenance labels and report generation without invented metrics |
 | Export pack | Planned | Portfolio and committee artifacts | Excel, PDF memo, CSV downloads and accessibility review |

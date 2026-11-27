@@ -225,6 +225,13 @@ try {
           const riskRows = document.querySelectorAll(".risk-decomposition-row").length;
           const effectiveRiskAssets = document.querySelector("#effective-risk-assets").textContent.trim();
           const stressCards = document.querySelectorAll(".stress-card").length;
+          document.querySelector('.sidebar [data-view-target="attribution"]').click();
+          await new Promise((resolve) => setTimeout(resolve, 60));
+          const attributionStatus = document.querySelector("#attribution-identity-status").textContent.trim();
+          const contributionGroups = document.querySelectorAll(".contribution-group").length;
+          const yearCells = document.querySelectorAll("#year-heatmap .heat-cell").length;
+          const benchmarkComparisons = [...document.querySelectorAll("#year-heatmap small")]
+            .filter((node) => node.textContent.includes("vs 60/40")).length;
           document.querySelector('.sidebar [data-view-target="command"]').click();
           await new Promise((resolve) => setTimeout(resolve, 60));
           const trigger = document.querySelector("#command-trigger");
@@ -247,6 +254,10 @@ try {
             riskRows,
             effectiveRiskAssets,
             stressCards,
+            attributionStatus,
+            contributionGroups,
+            yearCells,
+            benchmarkComparisons,
           };
         })()`,
       });
@@ -264,6 +275,10 @@ try {
         value.riskRows !== 8 ||
         value.effectiveRiskAssets === "—" ||
         value.stressCards !== 5 ||
+        value.attributionStatus !== "Identity closed" ||
+        value.contributionGroups !== 4 ||
+        value.yearCells !== 19 ||
+        value.benchmarkComparisons !== 19 ||
         value.workspaceChecks.some((check) => !check.visible || check.overflow || !check.heading)
       ) {
         throw new Error(`desktop interaction failed: ${JSON.stringify(value)}`);

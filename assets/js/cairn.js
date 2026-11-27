@@ -526,19 +526,54 @@
     }).join("");
   }
 
+  function renderAttributionSummary() {
+    const summary = results.attribution_summary;
+    if (!summary) return;
+    setText("#attribution-gross-contribution", format(summary.gross_contribution, "percent"));
+    setText("#attribution-annual-cost", format(-summary.annual_cost, "percent"));
+    setText("#attribution-net-arithmetic", format(summary.net_arithmetic_return, "percent"));
+    setText("#attribution-compounding-residual", format(summary.compounding_residual, "percent"));
+    setText("#attribution-reconciled-cagr", format(summary.reconciled_cagr, "percent"));
+    setText("#attribution-identity-error", Number(summary.identity_error).toExponential(1));
+
+    const status = document.querySelector("#attribution-identity-status");
+    if (status) {
+      const closed = Math.abs(Number(summary.identity_error)) < 1e-8;
+      status.textContent = closed ? "Identity closed" : "Review required";
+      status.classList.remove("signal-chip--positive", "signal-chip--error");
+      status.classList.add(closed ? "signal-chip--positive" : "signal-chip--error");
+    }
+
+    const container = document.querySelector("#contribution-groups");
+    if (!container) return;
+    const groups = Object.entries(results.contribution_groups || {});
+    const total = groups.reduce((sum, [, value]) => sum + Number(value), 0);
+    container.innerHTML = groups.map(([label, value]) => `
+      <div class="contribution-group">
+        <span>${label}</span>
+        <strong>${signedPercent(value)}</strong>
+        <small>${format(Number(value) / total, "percent")} of contribution</small>
+      </div>
+    `).join("");
+  }
+
   function renderHeatmap() {
     const heatmap = document.querySelector("#year-heatmap");
     if (!heatmap) return;
     const returns = Object.entries(results.yearly_returns || {});
+    const benchmarkReturns = results.yearly_returns_by_strategy?.["60/40"] || {};
     const maxAbs = Math.max(...returns.map(([, value]) => Math.abs(Number(value))), 0.01);
     heatmap.innerHTML = returns.map(([year, value]) => {
       const number = Number(value);
       const alpha = 0.05 + (Math.abs(number) / maxAbs) * 0.24;
       const state = number >= 0 ? "is-positive" : "is-negative";
+      const benchmark = benchmarkReturns[year];
+      const active = Number.isFinite(Number(benchmark)) ? number - Number(benchmark) : null;
       return `
         <div class="heat-cell ${state}" style="--heat-alpha:${alpha}">
           <span>${year}</span>
           <strong>${signedPercent(number)}</strong>
+          <small>${active === null ? "60/40 n/a" : `vs 60/40 ${active > 0 ? "+" : ""}${(active * 100).toFixed(1)} pp`}</small>
         </div>
       `;
     }).join("");
@@ -549,6 +584,11 @@
     if (!target) return;
     const gap = Number(results.metrics?.["60/40"]?.cagr) - Number(results.metrics?.["L1 SAA"]?.cagr);
     target.textContent = `${gap >= 0 ? "+" : ""}${(gap * 100).toFixed(2)} pp`;
+    const sharpeGap = Number(results.metrics?.["60/40"]?.sharpe) - Number(results.metrics?.["L1 SAA"]?.sharpe);
+    const sharpeTarget = document.querySelector("#benchmark-sharpe-gap");
+    if (sharpeTarget) {
+      sharpeTarget.textContent = `${sharpeGap >= 0 ? "+" : ""}${sharpeGap.toFixed(3)}`;
+    }
   }
 
   function renderStaticModules() {
@@ -560,6 +600,7 @@
     renderRiskDiagnostics();
     renderHistoricalStress();
     renderContributionBars();
+    renderAttributionSummary();
     renderHeatmap();
     renderBenchmarkGap();
   }

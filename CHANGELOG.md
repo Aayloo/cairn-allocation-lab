@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-11-27 — Attribution reconciliation
+
+- Added an arithmetic-to-geometric attribution bridge from gross asset
+  contribution through cost and compounding residual to reported CAGR.
+- Added grouped contribution totals for equity, duration and credit, real
+  assets and cash.
+- Added year-by-year L1 TAA comparisons against the 60/40 reference.
+- Added the Sharpe gap alongside the return gap.
+- Upgraded the public result contract with attribution and yearly strategy
+  comparison fields.
+- Marked Attribution complete and moved Research ledger to Next.
+
 ## 2026-11-26 — Risk diagnostics
 
 - Added effective asset breadth from capital and absolute-risk HHI measures.

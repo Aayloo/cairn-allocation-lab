@@ -106,3 +106,11 @@ def test_risk_workspace_exposes_concentration_and_stress_surfaces():
     assert 'id="effective-risk-assets"' in html
     assert 'id="historical-stress-tape"' in html
     assert "Stress tape" in html
+
+
+def test_attribution_workspace_exposes_reconciliation_and_benchmark_comparison():
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    assert 'id="attribution-identity-status"' in html
+    assert 'id="attribution-reconciled-cagr"' in html
+    assert 'id="contribution-groups"' in html
+    assert "L1 TAA versus 60/40 by year" in html

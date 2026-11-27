@@ -637,14 +637,66 @@
                 <strong id="benchmark-gap">—</strong>
                 <small>60/40 minus static SAA</small>
               </div>
+              <div class="benchmark-gap">
+                <span>Sharpe gap</span>
+                <strong id="benchmark-sharpe-gap">—</strong>
+                <small>60/40 minus static SAA</small>
+              </div>
             </aside>
           </div>
+
+          <article class="panel attribution-reconciliation">
+            <div class="panel-head">
+              <div>
+                <span class="panel-kicker">Contribution reconciliation</span>
+                <h2>From asset contributions to compounded return</h2>
+              </div>
+              <span class="signal-chip signal-chip--positive" id="attribution-identity-status">Checking</span>
+            </div>
+            <div class="return-bridge">
+              <div>
+                <span>Gross asset contribution</span>
+                <strong id="attribution-gross-contribution">—</strong>
+                <small>Mean monthly contribution × 12</small>
+              </div>
+              <div class="bridge-operator" aria-hidden="true">−</div>
+              <div>
+                <span>Annualised transaction cost</span>
+                <strong id="attribution-annual-cost">—</strong>
+                <small>Mean monthly cost × 12</small>
+              </div>
+              <div class="bridge-operator" aria-hidden="true">=</div>
+              <div>
+                <span>Net arithmetic return</span>
+                <strong id="attribution-net-arithmetic">—</strong>
+                <small>Before compounding drag</small>
+              </div>
+              <div class="bridge-operator" aria-hidden="true">+</div>
+              <div>
+                <span>Compounding residual</span>
+                <strong id="attribution-compounding-residual">—</strong>
+                <small>Timing and volatility effect</small>
+              </div>
+              <div class="bridge-operator" aria-hidden="true">=</div>
+              <div>
+                <span>Reconciled CAGR</span>
+                <strong id="attribution-reconciled-cagr">—</strong>
+                <small>Identity error: <span id="attribution-identity-error">—</span></small>
+              </div>
+            </div>
+            <div class="contribution-group-grid" id="contribution-groups"></div>
+            <p class="panel-copy panel-copy--small">
+              The residual is not a manager skill term. It captures compounding,
+              monthly path dependence and the difference between arithmetic and
+              geometric returns.
+            </p>
+          </article>
 
           <article class="panel">
             <div class="panel-head">
               <div>
                 <span class="panel-kicker">Calendar years</span>
-                <h2>Return dispersion</h2>
+                <h2>L1 TAA versus 60/40 by year</h2>
               </div>
               <div class="heat-legend" aria-label="Return legend">
                 <span>Loss</span><i class="heat-loss"></i><i class="heat-neutral"></i><i class="heat-gain"></i><span>Gain</span>
